@@ -99,13 +99,14 @@ fun CalculatorScreen(viewModel: UserViewModel) {
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Spacer(modifier = Modifier.width(16.dp))
                         Text(
                             text = it.name,
                             modifier = Modifier.weight(1f)
                         )
                         Text(
                             text = "%.0f g".format(share),
-                            textAlign = TextAlign.End,
+                            textAlign = TextAlign.Center,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -169,7 +170,7 @@ private fun CalculatorDialog(
                                     expression = expression.dropLast(1)
                                 }
                             },
-                            modifier = Modifier.weight(1f)
+                            modifier = buttonModifier
                         ) { Text("DEL") }
                         Button(
                             onClick = {
@@ -180,7 +181,7 @@ private fun CalculatorDialog(
                                     expression = "Error"
                                 }
                             },
-                            modifier = Modifier.weight(1f)
+                            modifier = buttonModifier
                         ) { Text("=") }
                     }
                 }
@@ -196,7 +197,7 @@ private fun CalculatorDialog(
 }
 
 @Composable
-private fun RowScope.CalculatorButton(
+private fun CalculatorButton(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit

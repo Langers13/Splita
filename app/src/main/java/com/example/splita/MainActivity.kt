@@ -61,7 +61,7 @@ fun MainScreen(viewModel: UserViewModel) {
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Image(
-                            painter = painterResource(id = R.drawable.splita_logo),
+                            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
                             contentDescription = "Splita Logo",
                             modifier = Modifier.size(32.dp)
                         )

@@ -40,6 +40,9 @@ fun UsersScreen(viewModel: UserViewModel) {
                     onSelect = { viewModel.toggleUserSelection(user) }
                 )
             }
+            item {
+                Spacer(Modifier.height(80.dp))
+            }
         }
     }
 }
