@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -133,37 +134,53 @@ private fun CalculatorDialog(
                 TextField(
                     value = expression,
                     onValueChange = { expression = it },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.medium
                 )
                 Spacer(Modifier.height(16.dp))
                 Column {
                     val buttonModifier = Modifier.weight(1f)
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        CalculatorButton("7", buttonModifier) { expression += "7" }
-                        CalculatorButton("8", buttonModifier) { expression += "8" }
-                        CalculatorButton("9", buttonModifier) { expression += "9" }
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        CalculatorButton("1", buttonModifier) { expression += "1" }
+                        CalculatorButton("2", buttonModifier) { expression += "2" }
+                        CalculatorButton("3", buttonModifier) { expression += "3" }
                         CalculatorButton("/", buttonModifier) { expression += "/" }
                     }
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         CalculatorButton("4", buttonModifier) { expression += "4" }
                         CalculatorButton("5", buttonModifier) { expression += "5" }
                         CalculatorButton("6", buttonModifier) { expression += "6" }
                         CalculatorButton("*", buttonModifier) { expression += "*" }
                     }
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        CalculatorButton("1", buttonModifier) { expression += "1" }
-                        CalculatorButton("2", buttonModifier) { expression += "2" }
-                        CalculatorButton("3", buttonModifier) { expression += "3" }
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        CalculatorButton("7", buttonModifier) { expression += "7" }
+                        CalculatorButton("8", buttonModifier) { expression += "8" }
+                        CalculatorButton("9", buttonModifier) { expression += "9" }
                         CalculatorButton("-", buttonModifier) { expression += "-" }
                     }
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         CalculatorButton("C", buttonModifier) { expression = "" }
                         CalculatorButton("0", buttonModifier) { expression += "0" }
                         CalculatorButton(".", buttonModifier) { expression += "." }
                         CalculatorButton("+", buttonModifier) { expression += "+" }
                     }
                     Spacer(Modifier.height(8.dp))
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         Button(
                             onClick = {
                                 if (expression.isNotEmpty()) {
@@ -185,14 +202,24 @@ private fun CalculatorDialog(
                         ) { Text("=") }
                     }
                 }
+                Spacer(Modifier.height(24.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Button(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f)
+                    ) { Text("Exit") }
+                    Button(
+                        onClick = { onConfirm(expression) },
+                        modifier = Modifier.weight(1f)
+                    ) { Text("Use Value") }
+                }
             }
         },
-        confirmButton = {
-            Button(onClick = { onConfirm(expression) }) { Text("Use Value") }
-        },
-        dismissButton = {
-            Button(onClick = onDismiss) { Text("Exit") }
-        }
+        dismissButton = {},
+        confirmButton = {}
     )
 }
 
