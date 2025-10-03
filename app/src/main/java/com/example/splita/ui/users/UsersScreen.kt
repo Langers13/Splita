@@ -7,10 +7,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.splita.model.User
 import com.example.splita.ui.UserViewModel
@@ -57,11 +57,12 @@ fun UserCard(
     Card(modifier = Modifier.padding(vertical = 8.dp)) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                TextField(
+                OutlinedTextField(
                     value = user.name,
                     onValueChange = { onUserChange(user.copy(name = it)) },
                     label = { Text("Name") },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    shape = MaterialTheme.shapes.medium
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 Row(
@@ -69,47 +70,60 @@ fun UserCard(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Spacer(modifier = Modifier.weight(1f))
                     Checkbox(checked = user.isSelected, onCheckedChange = { onSelect() })
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.weight(1f))
                     IconButton(onClick = onDelete) {
                         Icon(Icons.Filled.Delete, contentDescription = "Delete User")
                     }
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
-            Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically) {
+                OutlinedTextField(
                     value = if (user.age == 0) "" else user.age.toString(),
                     onValueChange = { onUserChange(user.copy(age = it.toIntOrNull() ?: 0)) },
                     label = { Text("Age") },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    shape = MaterialTheme.shapes.medium,
+                    suffix = { Text("(yrs)") }
                 )
                 Spacer(modifier = Modifier.width(24.dp))
-                TextField(
+                OutlinedTextField(
                     value = if (user.height == 0) "" else user.height.toString(),
                     onValueChange = { onUserChange(user.copy(height = it.toIntOrNull() ?: 0)) },
-                    label = { Text("Height (cm)") },
-                    modifier = Modifier.weight(1f)
+                    label = { Text("Height") },
+                    modifier = Modifier.weight(1f),
+                    shape = MaterialTheme.shapes.medium,
+                    suffix = { Text("(cm)") }
                 )
             }
-            Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically) {
+                OutlinedTextField(
                     value = if (user.weight == 0f) "" else user.weight.toString(),
                     onValueChange = { onUserChange(user.copy(weight = it.toFloatOrNull() ?: 0f)) },
-                    label = { Text("Weight (kg)") },
-                    modifier = Modifier.weight(1f)
+                    label = { Text("Weight") },
+                    modifier = Modifier.weight(1f),
+                    shape = MaterialTheme.shapes.medium,
+                    suffix = { Text("(kg)") }
                 )
                 Spacer(modifier = Modifier.width(24.dp))
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(1f),
+                    ) {
                     SexSelector(sex = user.sex) { sex ->
                         onUserChange(user.copy(sex = sex))
                     }
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.Bottom
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                TextField(
+                OutlinedTextField(
                     value = if (user.activityCalories == 0) "0" else user.activityCalories.toString(),
                     onValueChange = {
                         onUserChange(
@@ -118,15 +132,20 @@ fun UserCard(
                             )
                         )
                     },
-                    label = { Text("Activity Calories") },
-                    modifier = Modifier.weight(1f)
+                    label = { Text("Xtra Cals") },
+                    modifier = Modifier.weight(1f),
+                    shape = MaterialTheme.shapes.medium,
+                    suffix = { Text("(cal)") }
                 )
                 Spacer(modifier = Modifier.width(24.dp))
-                Text(
-                    text = "Total: ${user.totalCalories} cal",
-                    style = MaterialTheme.typography.bodyMedium,
+                OutlinedTextField(
+                    value = "${user.totalCalories}",
+                    onValueChange = {},
+                    label = { Text("Total") },
+                    readOnly = true,
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
+                    shape = MaterialTheme.shapes.medium,
+                    suffix = { Text("(cal)") }
                 )
             }
         }
@@ -139,13 +158,14 @@ fun SexSelector(sex: String, onSexChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
-        TextField(
+        OutlinedTextField(
             value = sex,
             onValueChange = {},
             readOnly = true,
             label = { Text("Sex") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable),
+            shape = MaterialTheme.shapes.medium
         )
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             DropdownMenuItem(

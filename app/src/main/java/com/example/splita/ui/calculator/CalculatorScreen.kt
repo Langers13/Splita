@@ -44,8 +44,8 @@ fun CalculatorScreen(viewModel: UserViewModel) {
         )
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(
+    Column(modifier = Modifier.padding(24.dp)) {
+        OutlinedTextField(
             value = foodWeight,
             onValueChange = {},
             readOnly = true,
